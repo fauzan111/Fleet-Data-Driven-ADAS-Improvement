@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+# Add the project root to sys.path so `pytest` (run bare, e.g. in CI) can import
+# the `fleet_adas` package without an editable install. Without this, only
+# `python -m pytest` works (it adds the cwd), which is why CI failed but local
+# `python -m pytest` passed.
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"
