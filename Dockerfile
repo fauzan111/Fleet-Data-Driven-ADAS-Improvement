@@ -15,9 +15,15 @@ RUN chmod +x ./docker/entrypoint.sh
 
 ENV FLEET_DATA_ROOT=/app/data \
     FLEET_MODEL_ROOT=/app/models \
+    FLEET_N_TRIPS=4000 \
     PYTHONUNBUFFERED=1
+
+# Bake the data lake + trained model into the image at build time, so the
+# container serves instantly with no per-boot pipeline (keeps the runtime well
+# within a 512 MB free-tier instance and avoids slow cold starts).
+RUN python -m fleet_adas.cli all
 
 EXPOSE 8000
 
-# On first start, build the data lake + train the model, then serve the API.
+# Serve the API (artifacts already baked). Honors $PORT for PaaS hosts (Render).
 ENTRYPOINT ["./docker/entrypoint.sh"]
