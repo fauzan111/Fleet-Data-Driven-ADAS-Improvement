@@ -1,5 +1,11 @@
 # Fleet-Data-Driven ADAS Improvement
 
+**🔴 Live API:** **[fleet-adas-api.onrender.com/docs](https://fleet-adas-api.onrender.com/docs)**
+ · [risk-score](https://fleet-adas-api.onrender.com/risk-score?lat=45.43&lon=8.31)
+ · [hotspots](https://fleet-adas-api.onrender.com/hotspots?limit=5)
+ · [health](https://fleet-adas-api.onrender.com/health)
+<sub>(free tier — first request after idle may cold-start for ~30 s)</sub>
+
 An end-to-end system that turns **anonymised fleet driving data** into
 **per-road-segment risk scores** and **concrete ADAS (Advanced Driver-Assistance
 System) parameter recommendations** — served over a production-style FastAPI

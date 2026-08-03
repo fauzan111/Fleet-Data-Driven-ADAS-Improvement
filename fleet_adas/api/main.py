@@ -14,6 +14,7 @@ from __future__ import annotations
 import logging
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import RedirectResponse
 
 from .. import __version__
 from .schemas import (HealthResponse, HotspotsResponse, RiskScoreResponse,
@@ -29,6 +30,12 @@ app = FastAPI(
     description="Turns anonymised fleet driving events into per-road-segment "
                 "risk scores and concrete ADAS parameter recommendations.",
 )
+
+
+@app.get("/", include_in_schema=False)
+def root():
+    """Send visitors of the bare URL straight to the interactive API docs."""
+    return RedirectResponse(url="/docs")
 
 
 @app.get("/health", response_model=HealthResponse)
