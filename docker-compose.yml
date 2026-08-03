@@ -1,0 +1,24 @@
+# Local, self-contained stack: builds the data lake + model on first run,
+# then serves the ADAS risk API. `docker compose up` and hit http://localhost:8000/docs
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # smaller synthetic fleet for a quick container boot; raise for realism
+      FLEET_N_TRIPS: "4000"
+    volumes:
+      # persist the generated data lake + model between runs
+      - fleet_data:/app/data
+      - fleet_models:/app/models
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  fleet_data:
+  fleet_models:
